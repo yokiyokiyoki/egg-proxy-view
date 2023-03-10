@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "description": "",
   "eggPlugin": {
-    "name": "eggVite"
+    "name": "vite"
   },
   "keywords": [
     "egg",
