@@ -1,4 +1,4 @@
-# egg-egg-vite
+# egg-vite
 
 [![NPM version][npm-image]][npm-url]
 [![build status][travis-image]][travis-url]
@@ -43,8 +43,9 @@ exports.vite = {
 ## Configuration
 
 ```js
-// {app_root}/config/config.default.js
+// {app_root}/config/config.local.js
 config.vite = {
+    // default默认是false，就不会启动vite服务
     devServer: true,
     targets: [
       /^(\/node_modules)/g，
