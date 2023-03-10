@@ -50,6 +50,7 @@ config.vite = {
       /^(\/node_modules)/g，
       '/assets/(.*)'
     ],
+    inlineConfig:{}
   }
 ```
 

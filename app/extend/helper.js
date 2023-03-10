@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   /**
    * 是否正则
    * @param {*} target
