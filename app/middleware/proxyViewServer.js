@@ -12,7 +12,7 @@ module.exports = () => {
     // 如果没有检测到服务连接
     if (!app.isConnectProxyServer) {
       app.isConnectProxyServer = await ctx.helper.checkConnection()
-      console.log('无法连接到devServer，请检查是否启动')
+      ctx.logger.error('egg-proxy-view 无法连接到devServer，请检查对应端口是否启动')
     }
 
     // 自定义规则转发到devServer服务
