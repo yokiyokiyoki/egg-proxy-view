@@ -10,13 +10,14 @@ module.exports = () => {
     const { targets = []} = app.config.proxyView;
 
     // 如果没有检测到服务连接
-    if (!app.isConnectProxyServer) {
-      ctx.helper.checkConnection().then(()=>{
-        app.isConnectProxyServer=true
+    if (!app.connectProxyServer) {
+      try{
+        await ctx.helper.checkConnection()
+        app.connectProxyServer=ctx.helper.getServerAddress()
         ctx.logger.info(`[egg-proxy-view]:插件已经连接到devServer`)
-      }).catch(()=>{
-        ctx.logger.error(`[egg-proxy-view]:插件无法连接到devServer，请检查对应端口${protocol}://${ctx.helper.getServerAddress()}服务是否正常`)
-      })
+      }catch(err){
+        ctx.logger.error(`egg-proxy-view 无法连接到devServer，请检查对应端口${ctx.helper.getServerAddress()}是否启动`)
+      }
     }
 
     // 自定义规则转发到devServer服务

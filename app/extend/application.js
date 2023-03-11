@@ -1,10 +1,10 @@
 const SERVER = Symbol('application#proxy-server');
 
 module.exports = {
-  get isConnectProxyServer() {
+  get connectProxyServer() {
     return this[SERVER];
   },
-  set isConnectProxyServer(value) {
+  set connectProxyServer(value) {
     this[SERVER] = value;
   },
 };
