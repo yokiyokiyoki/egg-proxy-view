@@ -9,14 +9,31 @@ module.exports = {
     return Object.prototype.toString.call(target) === "[object RegExp]";
   },
   /**
-   * 获取server的ip和端口
+   * 获取host和端口
+   */
+  getHostPort(){
+    let {host,port}=this.app.config.proxyView.server
+    if(!host){
+      host='localhost'
+    }
+    if(!port){
+      throw new Error('请输入端口')
+    }
+    // @todo：判断host和port是否合法
+    return {
+      host,
+      port
+    }
+  },
+  /**
+   * 拼凑server的ip和端口
    * @param {*} server
    * @returns
    */
   getServerAddress: () => {
-    const {host,port}=this.app.config.proxyView.server
-    // @todo：判断host和port是否合法
-    return `${host === "::" ? "0.0.0.0" : host}:${port}`;
+    const {host,port}=this.ctx.helper.getHostPort()
+    
+    return `${!host ? "localhost" : host}:${port}`;
   },
   
   /**
@@ -25,7 +42,8 @@ module.exports = {
    * @returns 
    */
   checkConnection(timeout) {
-    const {host,port}=this.app.config.proxyView.server
+    let {host,port}=this.ctx.helper.getHostPort()
+    
     return new Promise(function(resolve, reject) {
         timeout = timeout || 10000;     // default of 10 seconds
         var timer = setTimeout(function() {

@@ -5,9 +5,7 @@
 [npm-image]: https://img.shields.io/npm/v/egg-proxy-view.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/egg-proxy-view
 
-<!--
-Description here.
--->
+一般用于代理前端 devServer 的 html
 
 ## Install
 
@@ -50,7 +48,17 @@ see [config/config.default.js](config/config.default.js) for more detail.
 
 ## Example
 
-<!-- example here -->
+```ts
+@Get('/*')
+async home() {
+  const ctx = this.ctx;
+  const userAgent = ctx.headers['user-agent'];
+  const mobileReg = /\s+Mobile/i;
+  const template = mobileReg.test(userAgent) ? 'mobile.html' : 'index.html';
+  // 如果open为false，会自动走ctx.render
+  await ctx.proxyView.render(template, { data: {} });
+}
+```
 
 ## Questions & Suggestions
 
