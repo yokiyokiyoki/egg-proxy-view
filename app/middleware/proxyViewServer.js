@@ -10,6 +10,7 @@ module.exports = () => {
     const { targets = []} = app.config.proxyView;
     const hostPortConfig=ctx.helper.getHostPort()
     const {host,port}=hostPortConfig
+    
     // 如果没有检测到服务连接
     if (!app.connectProxyServer) {
       try{
