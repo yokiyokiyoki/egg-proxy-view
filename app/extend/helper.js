@@ -17,7 +17,7 @@ module.exports = {
       throw new Error('请添加proxyView.devServer配置')
     }
     const config={
-      host:eggConfig.host||"localhost",
+      host:eggConfig.host||"127.0.0.1",
       port:eggConfig.port
     }
     if(!config.port){
@@ -34,7 +34,7 @@ module.exports = {
   getServerAddress: () => {
     const {host,port}=this.ctx.helper.getHostPort()
     
-    return `${!host ? "localhost" : host}:${port}`;
+    return `${host}:${port}`;
   },
   
   /**
@@ -43,7 +43,7 @@ module.exports = {
    * @returns 
    */
   checkConnection(timeout) {
-    let {host,port}=this.ctx.helper.getHostPort()
+    const {host,port}=this.ctx.helper.getHostPort()
     
     return new Promise(function(resolve, reject) {
         timeout = timeout || 10000;     // default of 10 seconds
