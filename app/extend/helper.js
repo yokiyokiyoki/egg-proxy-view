@@ -12,18 +12,16 @@ module.exports = {
    * 获取host和端口
    */
   getHostPort(){
-    let {host,port}=this.app.config.proxyView.server
-    if(!host){
-      host='localhost'
+    const eggConfig=this.app.config.proxyView.server
+    const config={
+      host:eggConfig.host||"localhost",
+      port:eggConfig.port
     }
-    if(!port){
+    if(!config.port){
       throw new Error('请输入端口')
     }
     // @todo：判断host和port是否合法
-    return {
-      host,
-      port
-    }
+    return config
   },
   /**
    * 拼凑server的ip和端口
