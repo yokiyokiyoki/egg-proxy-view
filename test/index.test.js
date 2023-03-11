@@ -17,7 +17,7 @@ describe('test/index.test.js', () => {
   it('should GET /', () => {
     return app.httpRequest()
       .get('/')
-      .expect('hi, eggVite')
+      .expect('hi, egg-proxy-view')
       .expect(200);
   });
 });

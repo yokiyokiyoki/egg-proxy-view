@@ -1,3 +1,4 @@
+const net = require('net');
 module.exports = {
   /**
    * 是否正则
@@ -12,17 +13,35 @@ module.exports = {
    * @param {*} server
    * @returns
    */
-  getServerAddress: (server) => {
-    const address = server.httpServer.address();
-
-    if (typeof address === "string") {
-      return address;
-    }
-
-    const ip = (address && address.address) || "0.0.0.0";
-
-    const port = (address && address.port) || 3000;
-
-    return `${ip === "::" ? "0.0.0.0" : ip}:${port}`;
+  getServerAddress: () => {
+    const {host,port}=this.app.config.proxyView.server
+    // @todo：判断host和port是否合法
+    return `${host === "::" ? "0.0.0.0" : host}:${port}`;
   },
+  
+  /**
+   * 检查服务连接
+   * @param {*} timeout 
+   * @returns 
+   */
+  checkConnection(timeout) {
+    const {host,port}=this.app.config.proxyView.server
+    return new Promise(function(resolve, reject) {
+        timeout = timeout || 10000;     // default of 10 seconds
+        var timer = setTimeout(function() {
+            reject("timeout");
+            socket.end();
+        }, timeout);
+        var socket = net.createConnection(port, host, function() {
+            clearTimeout(timer);
+            resolve();
+            socket.end();
+        });
+        socket.on('error', function(err) {
+            clearTimeout(timer);
+            reject(err);
+        });
+    });
+}
+
 };

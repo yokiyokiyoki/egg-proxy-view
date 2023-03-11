@@ -1,23 +1,24 @@
 'use strict';
 
 /**
- * egg-vite default config
- * @member Config#vite
+ * egg-proxy-view default config
+ * @member Config#proxy-view
  * @property {String} SOME_KEY - some description
  */
-exports.vite = {
+exports.proxyView = {
     /**
      * 是否运行devServer
      */
-    devServer: false,
+    open: false,
     /**
-     * vite creatServer调用的，参考vite文档，可以自定义配置文件在哪里
+     * devServer配置
      */
-    inlineConfig:{
-
+    devServer:{
+        host:"localhost",
+        port:8899,
     },
     /**
-     * 转发到vite服务
+     * 转发到devServer服务,如webpack，vite启动的代理服务
      * 规则参见http-proxy-middleware
      * [/^(\/node_modules)/g，'/assets/(.*)']
      */

@@ -1,24 +1,8 @@
-# egg-vite
+# egg-proxy-view
 
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
-[![Test coverage][codecov-image]][codecov-url]
-[![David deps][david-image]][david-url]
-[![Known Vulnerabilities][snyk-image]][snyk-url]
-[![npm download][download-image]][download-url]
 
-[npm-image]: https://img.shields.io/npm/v/egg-egg-vite.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/egg-egg-vite
-[travis-image]: https://img.shields.io/travis/eggjs/egg-egg-vite.svg?style=flat-square
-[travis-url]: https://travis-ci.org/eggjs/egg-egg-vite
-[codecov-image]: https://img.shields.io/codecov/c/github/eggjs/egg-egg-vite.svg?style=flat-square
-[codecov-url]: https://codecov.io/github/eggjs/egg-egg-vite?branch=master
-[david-image]: https://img.shields.io/david/eggjs/egg-egg-vite.svg?style=flat-square
-[david-url]: https://david-dm.org/eggjs/egg-egg-vite
-[snyk-image]: https://snyk.io/test/npm/egg-egg-vite/badge.svg?style=flat-square
-[snyk-url]: https://snyk.io/test/npm/egg-egg-vite
-[download-image]: https://img.shields.io/npm/dm/egg-egg-vite.svg?style=flat-square
-[download-url]: https://npmjs.org/package/egg-egg-vite
+[npm-image]: https://img.shields.io/npm/v/egg-proxy-view.svg?style=flat-square
 
 <!--
 Description here.
@@ -27,16 +11,16 @@ Description here.
 ## Install
 
 ```bash
-$ npm i egg-vite --save
+$ npm i egg-proxy-view --save
 ```
 
 ## Usage
 
 ```js
 // {app_root}/config/plugin.js
-exports.vite = {
+exports.proxyView = {
   enable: true,
-  package: 'egg-vite',
+  package: 'egg-proxy-view',
 };
 ```
 
@@ -44,14 +28,20 @@ exports.vite = {
 
 ```js
 // {app_root}/config/config.local.js
-config.vite = {
-    // default默认是false，就不会启动vite服务
-    devServer: true,
+config.proxyView = {
+    // default默认是false，就不会启动该插件的中间件
+    open: false,
+    /**
+     * devServer配置
+     */
+    devServer:{
+        host:"localhost",
+        port:8899,
+    },
     targets: [
       /^(\/node_modules)/g，
       '/assets/(.*)'
     ],
-    inlineConfig:{}
   }
 ```
 

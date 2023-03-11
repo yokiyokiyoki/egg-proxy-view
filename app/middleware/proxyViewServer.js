@@ -1,4 +1,4 @@
-const { createServer } = require("vite");
+
 
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const k2Connect = require("koa2-connect");
@@ -7,15 +7,15 @@ const { pathToRegexp } = require("path-to-regexp");
 module.exports = () => {
   return async function (ctx, next) {
     const { app, path, protocol } = ctx;
-    const { targets = [], inlineConfig = {} } = app.config.vite;
+    const { targets = []} = app.config.proxyView;
 
-    // 启动vite服务
-    if (!app.viteServer) {
-      app.viteServer = await (await createServer(inlineConfig)).listen();
-      app.viteServer.printUrls();
+    // 如果没有检测到服务连接
+    if (!app.isConnectProxyServer) {
+      app.isConnectProxyServer = await ctx.helper.checkConnection()
+      console.log('无法连接到devServer，请检查是否启动')
     }
 
-    // 自定义规则转发到vite服务
+    // 自定义规则转发到devServer服务
 
     for (const target of targets) {
       // 判断是否是正则
@@ -24,9 +24,7 @@ module.exports = () => {
       ) {
         await k2Connect(
           createProxyMiddleware({
-            target: `${protocol}://${ctx.helper.getServerAddress(
-              app.viteServer
-            )}`,
+            target: `${protocol}://${ctx.helper.getServerAddress()}`,
             changeOrigin: true,
           })
         )(ctx, next);

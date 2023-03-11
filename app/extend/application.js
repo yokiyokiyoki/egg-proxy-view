@@ -1,10 +1,10 @@
-const SERVER = Symbol('application#vite-server');
+const SERVER = Symbol('application#proxy-server');
 
 module.exports = {
-  get viteServer() {
+  get isConnectProxyServer() {
     return this[SERVER];
   },
-  set viteServer(value) {
+  set isConnectProxyServer(value) {
     this[SERVER] = value;
   },
 };
