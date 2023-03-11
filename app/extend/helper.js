@@ -14,6 +14,7 @@ module.exports = {
   getHostPort(){
     const eggConfig=this.app.config.proxyView.devServer
     if(!eggConfig){
+      ctx.logger.error(`[egg-proxy-view]:请添加proxyView.devServer配置`)
       throw new Error('请添加proxyView.devServer配置')
     }
     const config={
@@ -21,6 +22,7 @@ module.exports = {
       port:eggConfig.port
     }
     if(!config.port){
+      ctx.logger.error(`[egg-proxy-view]:请输入端口`)
       throw new Error('请输入端口')
     }
     // @todo：判断host和port是否合法
@@ -31,9 +33,7 @@ module.exports = {
    * @param {*} server
    * @returns
    */
-  getServerAddress: () => {
-    const {host,port}=this.app.connectProxyServer
-    
+  getServerAddress: (host,port) => {
     return `${host}:${port}`;
   },
   
@@ -42,9 +42,7 @@ module.exports = {
    * @param {*} timeout 
    * @returns 
    */
-  checkConnection(timeout) {
-    const {host,port}=this.app.connectProxyServer
-    
+  checkConnection(host,port,timeout) {
     return new Promise(function(resolve, reject) {
         timeout = timeout || 10000;     // default of 10 seconds
         var timer = setTimeout(function() {
