@@ -14,29 +14,32 @@ module.exports = () => {
       try{
         await ctx.helper.checkConnection()
         app.connectProxyServer=ctx.helper.getHostPort()
-        ctx.logger.info(`[egg-proxy-view]:插件已经连接到devServer`)
+        ctx.logger.info(`[egg-proxy-view]:插件已经连接到devServer ${ctx.helper.getServerAddress()}`)
       }catch(err){
-        ctx.logger.error(`egg-proxy-view 无法连接到devServer，请检查对应端口${ctx.helper.getServerAddress()}是否启动`)
+        const {host,port}=this.app.connectProxyServer
+        const address=`${host}:${port}`
+        ctx.logger.error(`egg-proxy-view 无法连接到devServer，请检查对应端口${address}是否启动`)
+      }
+    }else{
+      // 自定义规则转发到devServer服务
+      for (const target of targets) {
+        // 判断是否是正则
+        if (
+          (ctx.helper.isRegexp(target) ? target : pathToRegexp(target)).test(path)
+        ) {
+          await k2Connect(
+            createProxyMiddleware({
+              target: `${protocol}://${ctx.helper.getServerAddress()}`,
+              changeOrigin: true,
+            })
+          )(ctx, next);
+
+          break;
+        }
       }
     }
 
-    // 自定义规则转发到devServer服务
-
-    for (const target of targets) {
-      // 判断是否是正则
-      if (
-        (ctx.helper.isRegexp(target) ? target : pathToRegexp(target)).test(path)
-      ) {
-        await k2Connect(
-          createProxyMiddleware({
-            target: `${protocol}://${ctx.helper.getServerAddress()}`,
-            changeOrigin: true,
-          })
-        )(ctx, next);
-
-        break;
-      }
-    }
+    
 
     await next();
   };
