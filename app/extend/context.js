@@ -22,10 +22,7 @@ module.exports = {
           const html = (
             await this.curl(`${this.protocol}://${path.join(address, name)}`, {
               // vite服务需要传accept头部才会返回html，否则会404
-              headers: {
-                Accept:
-                  "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-              },
+              headers:this.request.header,
             })
           ).data.toString();
           // 获取devServer html
