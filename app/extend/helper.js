@@ -12,7 +12,10 @@ module.exports = {
    * 获取host和端口
    */
   getHostPort(){
-    const eggConfig=this.app.config.proxyView.server
+    const eggConfig=this.app.config.proxyView.devServer
+    if(!eggConfig){
+      throw new Error('请添加proxyView.devServer配置')
+    }
     const config={
       host:eggConfig.host||"localhost",
       port:eggConfig.port
