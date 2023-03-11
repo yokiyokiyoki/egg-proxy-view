@@ -17,7 +17,8 @@ module.exports = {
          */
       render: async (name, data) => {
         if (this.app.connectProxyServer) {
-          const address=this.app.connectProxyServer
+          const {host,port}=this.app.connectProxyServer
+          const address=`${host}:${port}`
           const html = (
             await this.curl(`${this.protocol}://${path.join(address, name)}`)
           ).data.toString();

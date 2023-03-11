@@ -32,7 +32,7 @@ module.exports = {
    * @returns
    */
   getServerAddress: () => {
-    const {host,port}=this.ctx.helper.getHostPort()
+    const {host,port}=this.app.connectProxyServer
     
     return `${host}:${port}`;
   },
@@ -43,7 +43,7 @@ module.exports = {
    * @returns 
    */
   checkConnection(timeout) {
-    const {host,port}=this.ctx.helper.getHostPort()
+    const {host,port}=this.app.connectProxyServer
     
     return new Promise(function(resolve, reject) {
         timeout = timeout || 10000;     // default of 10 seconds

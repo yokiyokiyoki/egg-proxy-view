@@ -13,7 +13,7 @@ module.exports = () => {
     if (!app.connectProxyServer) {
       try{
         await ctx.helper.checkConnection()
-        app.connectProxyServer=ctx.helper.getServerAddress()
+        app.connectProxyServer=ctx.helper.getHostPort()
         ctx.logger.info(`[egg-proxy-view]:插件已经连接到devServer`)
       }catch(err){
         ctx.logger.error(`egg-proxy-view 无法连接到devServer，请检查对应端口${ctx.helper.getServerAddress()}是否启动`)
