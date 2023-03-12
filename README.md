@@ -5,7 +5,7 @@
 [npm-image]: https://img.shields.io/npm/v/egg-proxy-view.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/egg-proxy-view
 
-一般用于代理前端 devServer 的 html
+一般用于代理前端 devServer 的 html，还可以自定义策略代理devServer静态资源以及api
 
 ## Install
 
@@ -34,12 +34,16 @@ config.proxyView = {
      * devServer配置
      */
     devServer:{
-        host:"localhost",
+        host:"127.0.0.1",
         port:8899,
     },
+    /**
+     * 代理相关资源到devServer
+     */
     targets: [
       /^(\/node_modules)/g，
-      '/assets/(.*)'
+      '/assets/(.*)',
+      '/src/(.*)'
     ],
   }
 ```
@@ -48,6 +52,9 @@ see [config/config.default.js](config/config.default.js) for more detail.
 
 ## Example
 
+1. 新增config配置
+
+2. 更改ctx.render为ctx.proxyView.render
 ```ts
 @Get('/*')
 async home() {

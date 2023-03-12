@@ -19,7 +19,7 @@ module.exports = () => {
         ctx.logger.info(`[egg-proxy-view]:插件已经连接到devServer ${ctx.helper.getServerAddress(host,port)}`)
       }catch(err){
         const address=`${host}:${port}`
-        ctx.logger.error(`[egg-proxy-view]:插件无法连接到devServer，请检查对应端口${address}是否启动,${err}`)
+        ctx.logger.error(`[egg-proxy-view]:插件无法连接到devServer，请检查对应配置config.proxyView.server是否正确填入，以及检查${address}是否启动,错误：${err}`)
       }
     }else{
       // 自定义规则转发到devServer服务
